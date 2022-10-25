@@ -8,8 +8,8 @@ services:
     container_name: "coordinator"
     hostname: coordinator
     volumes:
-      - ./config.properties:/opt/presto-server/etc/config.properties
-      - ./hive.properties:/opt/presto-server/etc/catalog/hive.properties
+      - ./coordinator/config.properties:/opt/presto-server/etc/config.properties
+      - ./coordinator/hive.properties:/opt/presto-server/etc/catalog/hive.properties
 
   worker1:
     image: ahanaio/prestodb-sandbox:0.274
@@ -60,3 +60,13 @@ services:
     ports:
       - 30001:29999
       - 30002:30000
+
+  hive-metastore:
+    image: bde2020/hive:2.3.2-postgresql-metastore
+    container_name: hive-metastore
+    hostname: hive-metastore
+    env_file:
+      - ./hadoop.env
+    command: /opt/hive/bin/hive --service metastore
+    ports:
+      - "9083:9083"
