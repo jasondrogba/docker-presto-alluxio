@@ -31,7 +31,6 @@ services:
     depends_on:
       - coordinator
 
-
   alluxio-master:
     image: sonepo/alluxio-master:1.1
     container_name: alluxio-master
